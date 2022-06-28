@@ -1,4 +1,6 @@
 function Home(){
+const ctx = React.useContext(UserContext);
+
   return (
     <Card
       bgcolor="info"
@@ -8,6 +10,6 @@ function Home(){
       title="Welcome to the baddest bank"
       text="Your money isn't safe here."
       body={(<img src="badbank.jpeg" className="img-fluid" alt="Responsive image"/>)}
-    />    
+    />
   );  
 }

@@ -1,26 +1,28 @@
 function Withdraw(){
+  const ctx = React.useContext(UserContext);
   const [show, setShow]         = React.useState(true);
   const [status, setStatus]     = React.useState('');
   const [withdrawal, setWithdrawal]   = React.useState('');
-  const [balance, setBalance]   = React.useState(100);
+  const [balance, setBalance]   = React.useState(ctx.users[0].balance);
   const [disabled, setDisabled] = React.useState(true);
 
-  const ctx = React.useContext(UserContext);  
-
   const validate = amount => {
-      if (!amount) {
-        setStatus('Error: please enter a value');
-        return false;
-      } if (amount <=0) {
-        setStatus('Error: Cannot withdrawal more than balance');
-        return false;
-      } if (!Number(amount)) {
-        setStatus('Error: please enter a value');
-      } if (balance - amount < 0) {
-        setStatus('Warning: overdrafting account')
-      }
-      return true;
-  }
+    if (!amount) {
+      setStatus('Error: please enter a dollar value');
+      return false;
+    } if (amount > balance) {
+      setStatus('Warning: You will overdraft your account');
+      return false;
+    }  if (amount <= 0) {
+      setStatus('Error: Deposit cannot be zero or a negative number');
+      return false;
+    }
+    if (isNaN(amount)) {
+      setStatus('Error: please enter a value');
+      return false;
+    }
+    return true;
+}
 
   const makeWithdrawal = amount => {
     if (!validate(amount)) return;
@@ -31,7 +33,7 @@ function Withdraw(){
   }
 
 function clearForm(){
-  setDeposit('');
+  setWithdrawal('');
   setShow(true);
 }
 
@@ -53,7 +55,7 @@ React.useEffect(() => {
       body={show ? (  
               <>
               <h4>Balance: ${balance}</h4> <br/>
-              Deposit Amount<br/>
+              Withdraw Amount<br/>
               <input type="withdraw" className="form-control" id="withdraw" placeholder="Withdrawal Amount $" value={withdrawal} onChange={e => setWithdrawal(e.currentTarget.value)}/> <br/>
               <button type="submit" className="btn btn-light" onClick={() => makeWithdrawal(withdrawal)} disabled={disabled}>Withdrawal</button>
               </>

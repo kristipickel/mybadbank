@@ -1,12 +1,12 @@
 function Deposit(){
+  const ctx = React.useContext(UserContext);
   const [show, setShow]         = React.useState(true);
   const [status, setStatus]     = React.useState('');
   const [deposit, setDeposit]   = React.useState('');
-  const [balance, setBalance]   = React.useState(100);
+  const [balance, setBalance]   = React.useState(ctx.users[0].balance);
   const [disabled, setDisabled] = React.useState(true);
 
-  const ctx = React.useContext(UserContext);  
-
+ 
   const validate = amount => {
       if (!amount) {
         setStatus('Error: please enter a value');
@@ -14,8 +14,9 @@ function Deposit(){
       } if (amount <= 0) {
         setStatus('Error: Deposit cannot be zero or a negative number');
         return false;
-      } if (!Number(amount)) {
+      } if (isNaN(amount)) {
         setStatus('Error: please enter a value');
+        return false;
       }
       return true;
   }

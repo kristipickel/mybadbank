@@ -2,3 +2,41 @@ body {
     background-image:url('vault.jpeg');
     background-size: cover;
 }
+
+.nav-item a p {
+    visibility: hidden;
+    background-color: rgb(223, 238, 239);
+    color: black;
+    font-size: small;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: auto;
+    top: 80%;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* .nav-item a p::after {
+    content: "";
+    position: absolute;
+    top: -25%;
+    left: 10%;
+    margin-left: -8px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent #555 transparent;
+} */
+
+
+.nav-item a:hover p {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.nav-link:focus {
+    background-color: rgb(105, 219, 223);
+    color: #fff;
+}
